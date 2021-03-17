@@ -1,0 +1,9 @@
+<p>catalogue works!</p>
+<br/>
+<button (click)="onClickGetProducts()"> Get Products</button>
+
+<ul *ngFor = "let o of observable$ | async">
+    <li>
+        {{o.nom}} : {{o.prix}} €
+    </li>
+</ul>
