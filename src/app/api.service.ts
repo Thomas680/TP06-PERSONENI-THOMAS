@@ -10,19 +10,16 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient)
   {
-    this.datas = new Array<string> ();  
+
   }
 
-  cpt : number = 0;
-  datas : string [];
-  log (data) {
-    this.datas.push (data);
-    this.cpt++;
-    console.log (this.cpt + "" +this.datas );
-  }
-  
   public getProducts () : Observable<any> {
     return this.httpClient.get<any> (environment.baseUrl);
   }
+
+  public getProductsDetails () : Observable<any> {
+    return this.httpClient.get<any> (environment.detailsUrl);
+  }
+
 
 }

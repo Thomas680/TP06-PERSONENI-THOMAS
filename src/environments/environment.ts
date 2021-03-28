@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   baseUrl: '/assets/mock/bouchon.json',
+  detailsUrl: "/assets/Mocks/productDetails.json",
+  name:"dev"
 };
 
 /*

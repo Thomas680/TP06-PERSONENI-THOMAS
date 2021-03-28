@@ -1,0 +1,12 @@
+<div>
+    <h2>Mon panier</h2>
+    <table>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{product.name}}</td>
+                <td>{{product.price}}€</td>
+                <td><button (click)="onProductRemoved(product)">Retirer du panier</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

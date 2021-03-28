@@ -2,8 +2,10 @@
 <br/>
 <button (click)="onClickGetProducts()"> Get Products</button>
 
-<ul *ngFor = "let o of observable$ | async">
+<ul *ngFor = "let product of observable$ | async">
     <li>
-        {{o.nom}} : {{o.prix}} €
+        {{product.name}} : {{product.price}} €
+        <button [routerLink]="['/details', product.id]">Page produit</button>
+        <button (click)="onProductClicked(product)">Ajouter au panier</button>
     </li>
 </ul>
