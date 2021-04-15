@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header.component';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { DetailComponent } from './detail/detail.component';
+import { AccountFormComponent } from './account-form/account-form.component';
+import { AccountRecapComponent } from './account-recap/account-recap.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { DetailComponent } from './detail/detail.component';
     FiltreComponent,
     PanierComponent,
     HeaderComponent,
-    DetailComponent
+    DetailComponent,
+    AccountFormComponent,
+    AccountRecapComponent
   ],
   imports: [
     BrowserModule, 
