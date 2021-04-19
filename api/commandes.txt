@@ -1,0 +1,7 @@
+vendor/bin/doctrine orm:convert-mapping --namespace="" --force --from-database yml ./config/yaml
+
+Commande pour générer les classes PHP depuis le YAML :
+vendor/bin/doctrine orm:generate-entities --generate-annotations=false --update-entities=true --generate-methods=false ./modeles
+
+Update la bdd par rapport aux classes PHP
+vendor/bin/doctrine orm:schema-tool:update --force

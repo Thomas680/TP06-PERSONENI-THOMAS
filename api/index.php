@@ -7,7 +7,8 @@ use Slim\Factory\AppFactory;
 use Tuupola\Middleware\HttpBasicAuthentication;
 use \Firebase\JWT\JWT;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/bootstrap.php';
  
 $app = AppFactory::create();
 
@@ -42,22 +43,22 @@ $options = [
     }
 ];
 
-$app->post('/api/login', function (Request $request, Response $response, $args) {
-    $json = $request->getBody();
-    $data = json_decode($json, true); // parse the JSON into an assoc. array
-    if(!$data) {
-      $data = [];
-    }
+$app->get('/api/login', function (Request $request, Response $response, $args) {
+    // $json = $request->getBody();
+    // $data = json_decode($json, true); // parse the JSON into an assoc. array
+    // if(!$data) {
+    //   $data = [];
+    // }
 
-    $username = array_key_exists('username', $data) ? $data['username'] : null;
-    $password = array_key_exists('password', $data) ? $data['password'] : null;
+    // $username = array_key_exists('username', $data) ? $data['username'] : null;
+    // $password = array_key_exists('password', $data) ? $data['password'] : null;
 
-    if(!$username || !$password) {
-      $data = array('ERREUR' => 'Connexion', 'ERREUR' => '400');
-      $response->withStatus(400);
-      $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
-      return $response;
-    }
+    // if(!$username || !$password) {
+    //   $data = array('ERREUR' => 'Connexion', 'ERREUR' => '400');
+    //   $response->withStatus(400);
+    //   $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
+    //   return $response;
+    // }
 
     $issuedAt = time();
     $expirationTime = $issuedAt + 3600;
@@ -150,6 +151,29 @@ $app->get('/api/catalogue', function (Request $request, Response $response, $arg
     return $response;
 });
 
+$app->get('/api/produits', function (Request $request, Response $response, $args) {
+  global $entityManager;
+
+  $produitRepository = $entityManager->getRepository('Produit');
+  $produits = $produitRepository->findAll();
+
+  $data = [];
+
+  foreach ($produits as $p) {
+      $elem = [];
+      $elem["id"] = $p->getId();
+      $elem["titre"] = $p->getTitre();
+      $elem["description"] = $p->getDescription();
+      $elem["prix"] = $p->getPrix();
+
+      array_push($data, $elem);
+  }
+
+  $response = $response->withHeader("Content-Type", "application/json;charset=utf-8");
+
+  $response->getBody()->write(json_encode($data));
+  return $response;
+});
 
 $app->get('/api/client/{id}', function (Request $request, Response $response, $args) {
     $array = [];
