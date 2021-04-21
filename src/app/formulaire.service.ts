@@ -20,4 +20,14 @@ export class FormulaireService {
       "password": password
     }, httpOptions);
   }
+
+  public inscription(username: string, password: string): Observable<any>{
+    return this.httpClient.post<any>(environment.register,{
+      username: username,
+      password: password
+    },{
+      observe: 'response',
+      responseType: 'blob' as 'json'
+    });
+  }
 }

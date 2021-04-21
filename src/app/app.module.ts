@@ -13,11 +13,10 @@ import { HeaderComponent } from './header/header.component';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { DetailsComponent } from './produits/details/details.component';
-import { AccountFormComponent } from './account-form/account-form.component';
-import { AccountRecapComponent } from './account-recap/account-recap.component';
 import { ApiHttpInterceptor } from './api-http-interceptor';
 import { LoginComponent } from './login/login.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { InscriptionComponent } from './inscription/inscription.component';
 
 
 @NgModule({
@@ -28,10 +27,9 @@ import { AccueilComponent } from './accueil/accueil.component';
     PanierComponent,
     HeaderComponent,
     DetailsComponent,
-    AccountFormComponent,
-    AccountRecapComponent,
     LoginComponent,
-    AccueilComponent
+    AccueilComponent,
+    InscriptionComponent
   ],
   imports: [
     BrowserModule, 

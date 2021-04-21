@@ -1,7 +1,7 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AjouterProduit } from "../actions/ajouter-produit.action";
 import { RetirerProduit } from "../actions/retirer-produit.action";
-import {Panier} from "../model/panier.model";
+import { Panier } from 'src/shared/models/panier';
 
 @State<Panier>({
     name:"products",

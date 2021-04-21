@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { RetirerProduit } from '../actions/retirer-produit.action';
-import { Produit } from '../model/produit.model';
 import { Observable } from 'rxjs';
 import { PanierState } from '../state/panier.state';
+import { Produit } from 'src/shared/models/produit';
 
 @Component({
   selector: 'app-panier',

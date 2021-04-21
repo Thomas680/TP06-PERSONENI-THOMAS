@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ApiService } from '../../api.service';
 import { Observable } from 'rxjs';
-import { Produit } from '../../model/produit.model';
 import { PanierState } from '../../state/panier.state';
+import { Produit } from 'src/shared/models/produit';
 
 @Component({
   selector: 'app-detail',
@@ -29,6 +29,6 @@ export class DetailsComponent implements OnInit {
   }
 
   addToBasket(id : number, name : string, price : number) {
-    this.store.dispatch(new AjouterProduit({"id":id,"name":name,"price": price}));
+    this.store.dispatch(new AjouterProduit({"id":id,"titre":name,"prix": price}));
   }
 }

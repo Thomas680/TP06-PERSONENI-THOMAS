@@ -6,6 +6,7 @@ const base = "https://tp06-personeni-thomas.herokuapp.com/api/";
 export const environment = {
   production: false,
   login: base + 'login',
+  register: base + 'register',
   getProduits: '/assets/mock/bouchon.json',
   getProduitDetails: base + 'produits/{id}',
   name:"dev"
