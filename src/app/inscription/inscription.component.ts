@@ -22,7 +22,7 @@ export class InscriptionComponent implements OnInit {
     if(this.password == this.confirmPassword){
       this.formulaireService.inscription(this.username, this.password).subscribe(response => {
         if(response.status == 200){
-          this.router.navigate(['/accueil']);
+          this.router.navigate(['/']);
         }
       })
     }

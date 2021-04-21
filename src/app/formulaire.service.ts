@@ -11,14 +11,13 @@ export class FormulaireService {
   constructor(private httpClient : HttpClient ) { }
 
   public login(username : string, password : string) :   Observable<any> {
-    let httpOptions = {
-      headers: new HttpHeaders ({'Content-Type':'application/json'})
-    };
-
     return this.httpClient.post<any> (environment.login, {
       "username": username,
       "password": password
-    }, httpOptions);
+    }, {
+      observe: 'response',
+      responseType: 'blob' as 'json'
+    });
   }
 
   public inscription(username: string, password: string): Observable<any>{
