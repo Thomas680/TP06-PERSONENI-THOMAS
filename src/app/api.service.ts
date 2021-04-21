@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from "rxjs";
+import { Produit } from './model/produit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,11 @@ export class ApiService {
 
   }
 
-  public getProducts () : Observable<any> {
-    return this.httpClient.get<any> (environment.baseUrl);
+  public getProducts() : Observable<any> {
+    return this.httpClient.get<any> (environment.getProduits);
   }
 
-  public getProductsDetails () : Observable<any> {
-    return this.httpClient.get<any> (environment.detailsUrl);
+  public getProductDetail(id: number): Observable<Produit>{
+    return this.httpClient.get<Produit>(environment.getProduitDetails.replace('{id}', id.toString()));
   }
-
-
 }

@@ -1,0 +1,7 @@
+<div>
+    <p>{{produitDetails.titre}} : {{produitDetails.prix}}€
+    <br>
+    {{produitDetails.description}}
+    </p>
+    <button (click)="addToBasket(produitDetails.id, produitDetails.titre, produitDetails.prix)">Ajouter au panier</button>
+</div>

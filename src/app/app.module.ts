@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CatalogueComponent } from './catalogue/catalogue.component';
-import { HttpClientModule } from '@angular/common/http';
+import { CatalogueComponent } from './produits/catalogue/catalogue.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FiltreComponent } from './filtre/filtre.component';
 import { FormsModule } from '@angular/forms';
 import { PanierComponent } from './panier/panier.component';
@@ -12,9 +12,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
-import { DetailComponent } from './detail/detail.component';
+import { DetailsComponent } from './produits/details/details.component';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { AccountRecapComponent } from './account-recap/account-recap.component';
+import { ApiHttpInterceptor } from './api-http-interceptor';
+import { LoginComponent } from './login/login.component';
+import { AccueilComponent } from './accueil/accueil.component';
 
 
 @NgModule({
@@ -24,9 +27,11 @@ import { AccountRecapComponent } from './account-recap/account-recap.component';
     FiltreComponent,
     PanierComponent,
     HeaderComponent,
-    DetailComponent,
+    DetailsComponent,
     AccountFormComponent,
-    AccountRecapComponent
+    AccountRecapComponent,
+    LoginComponent,
+    AccueilComponent
   ],
   imports: [
     BrowserModule, 
@@ -37,7 +42,9 @@ import { AccountRecapComponent } from './account-recap/account-recap.component';
       developmentMode:!environment.production
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

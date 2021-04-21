@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AjouterProduit } from '../actions/ajouter-produit.action';
-import { Produit } from '../model/produit.model';
+import { AjouterProduit } from '../../actions/ajouter-produit.action';
+import { Produit } from '../../model/produit.model';
 import { Observable } from 'rxjs';
-import { PanierState } from '../state/panier.state';
-import { ApiService } from '../api.service';
+import { PanierState } from '../../state/panier.state';
+import { ApiService } from '../../api.service';
 
 @Component({
   selector: 'app-catalogue',
@@ -22,13 +22,12 @@ export class CatalogueComponent implements OnInit {
 
   }
 
-  onClickGetProducts () {
-    this.observable$ = this.apiService.getProducts ();
+  getProducts () {
+    this.observable$ = this.apiService.getProducts();
     this.products$ = this.store.select(PanierState.getProducts);
-
   }
 
-  onProductClicked(product:Produit)
+  addToBasket(product:Produit)
   {
     this.store.dispatch(new AjouterProduit(product));
   }

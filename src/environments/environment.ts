@@ -1,11 +1,13 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+const base = "https://tp06-personeni-thomas.herokuapp.com/api/";
 
 export const environment = {
   production: false,
-  baseUrl: '/assets/mock/bouchon.json',
-  detailsUrl: "/assets/Mocks/productDetails.json",
+  login: base + 'login',
+  getProduits: '/assets/mock/bouchon.json',
+  getProduitDetails: base + 'produits/{id}',
   name:"dev"
 };
 

@@ -1,0 +1,10 @@
+<p>Catalogue</p>
+<button (click)="getProducts()">Afficher les produits</button>
+
+<ul *ngFor = "let product of observable$ | async">
+    <li>
+        {{product.titre}} : {{product.prix}} €
+        <button [routerLink]="['/details', product.id]">Page produit</button>
+        <button (click)="addToBasket(product)">Ajouter au panier</button>
+    </li>
+</ul>
