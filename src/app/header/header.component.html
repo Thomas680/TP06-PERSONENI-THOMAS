@@ -1,10 +1,40 @@
-<h1>Projet web NFE 114 - Thomas Personeni</h1>
-<ul>
+<!-- <ul>
     <li [routerLink]="['/']">Accueil</li>
     <li [routerLink]="['/catalogue']">Catalogue</li>
     <li [routerLink]="['/panier']">Mon panier</li>
     <li [routerLink]="['/register']">Créer un compte</li>
     <li [routerLink]="['/login']">Connexion</li>
-</ul>
-<p>{{productsLength}} produit(s) dans le panier</p>
-<p>Montant total du panier: {{totalPrice}} €</p>
+</ul> -->
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <p class="nav-link" [routerLink]="['/']">Accueil</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-link" [routerLink]="['/catalogue']">Catalogue</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-link" [routerLink]="['/panier']">Mon panier</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-link" [routerLink]="['/register']">Créer un compte</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-link" [routerLink]="['/login']">Connexion</p>
+        </li>
+      </ul>
+    </div>
+</nav>
+<div class="below-header">
+<h1>Projet web NFE 114 - Thomas Personeni</h1>
+<p>{{productsLength}} produit(s) dans le panier : {{totalPrice}} €</p>
+</div>

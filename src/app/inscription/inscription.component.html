@@ -1,13 +1,18 @@
-<p>Inscription</p>
-<label>Identifiant
-    <input [(ngModel)]="username">
-</label>
-<br/>
-<label>Mot de passe
-    <input [(ngModel)]="password">
-</label>
-<br/>
-<label>Confirmation du mot de passe</label>
- <input [(ngModel)]="confirmPassword">
-<br/>
-<button (click) ="doInscription()">Inscription</button>
+<p class="h3">Inscription</p>
+<div class="form-group">
+    <label>Identifiant
+        <input class="form-control" [(ngModel)]="username">
+    </label>
+</div>
+<div class="form-group">
+    <label>Mot de passe
+        <input class="form-control" type="password" [(ngModel)]="password">
+    </label>
+</div>
+
+<div class="form-group">
+    <label>Confirmation du mot de passe
+        <input class="form-control" type="password" [(ngModel)]="confirmPassword">
+    </label>
+</div>
+<button class="btn btn-primary" (click) ="doInscription()">Inscription</button>

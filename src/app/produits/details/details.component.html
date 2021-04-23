@@ -1,7 +1,11 @@
 <div>
-    <p>{{produitDetails.titre}} : {{produitDetails.prix}}€
-    <br>
-    {{produitDetails.description}}
+    <p class="h3">
+        {{produitDetails.titre}}
+        <small class="text-muted">{{produitDetails.prix}} €</small>
     </p>
-    <button (click)="addToBasket(produitDetails.id, produitDetails.titre, produitDetails.prix)">Ajouter au panier</button>
+    <p>Description:
+    <br>
+    {{produitDetails.description}} 
+    </p>
+    <button class="btn btn-warning" (click)="addToBasket(produitDetails.id, produitDetails.titre, produitDetails.prix)">Ajouter au panier</button>
 </div>
