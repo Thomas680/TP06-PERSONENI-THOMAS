@@ -12,6 +12,7 @@ export class InscriptionComponent implements OnInit {
   username : string = "";
   password : string = "";
   confirmPassword : string = "";
+  errorMsg : string = "";
 
   constructor(private formulaireService : FormulaireService, private router: Router) { }
 
@@ -20,10 +21,10 @@ export class InscriptionComponent implements OnInit {
 
   doInscription(){
     if(this.password == this.confirmPassword){
-      this.formulaireService.inscription(this.username, this.password).subscribe(response => {
-        if(response.status == 200){
-          this.router.navigate(['/']);
-        }
+      this.formulaireService.inscription(this.username, this.password).subscribe((response) => {
+        this.router.navigate(['/']);
+      }, (error) => {
+        this.errorMsg = "Erreur lors de l'inscription."
       })
     }
   }

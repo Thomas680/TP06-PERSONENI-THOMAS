@@ -7,12 +7,11 @@ import { Router} from '@angular/router'
 @Injectable()
 export class ApiHttpInterceptor implements HttpInterceptor
 {
-    jwtToken : String = "";
     constructor(private router : Router) { }
   
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this.jwtToken != "") {
-            req = req.clone({ setHeaders: { Authorization: `Bearer ${this.jwtToken}` }});
+        if (localStorage.getItem('jwt') != "") {
+            req = req.clone({ setHeaders: { Authorization: `Bearer ${localStorage.getItem('jwt')}` }});
         }
         
         return next.handle(req).pipe(tap(
@@ -24,19 +23,19 @@ export class ApiHttpInterceptor implements HttpInterceptor
                         if (enteteAuthorization != null ) {
                             tab = enteteAuthorization.split(/Bearer\s+(.*)$/i);
                             if (tab.length > 1) {
-                                this.jwtToken = tab [1]; }
+                                localStorage.setItem("jwt", tab[1].toString());
                             }
-   
+                        }
                     }
-                }, ( error : HttpErrorResponse ) =>  {
+                }, (error : HttpErrorResponse) => {
                     switch (error.status) {
                         case 401 :
-                            this.router.navigate (['/connexion']);
+                            this.router.navigate (['/login']);
                             break;
                         default : 
-                            console.log ("ERROR !!!!!") 
+                            console.log ("Error http interceptor") 
                     }
-                    } 
-                ) )
- }   
+                } 
+        ))
+    }   
 }

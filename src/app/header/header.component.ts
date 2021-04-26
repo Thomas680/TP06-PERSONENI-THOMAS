@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { PanierState } from '../state/panier.state';
 import { Produit } from 'src/shared/models/produit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
   products$: Observable<Produit[]>;
   productsLength:number;
   totalPrice:number;
-  constructor(private store:Store) { 
+  constructor(private store:Store, private router:Router) { 
   }
 
   ngOnInit(): void {
@@ -25,4 +26,8 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  doLogout(): void {
+    localStorage.removeItem("jwt");
+    this.router.navigate(["/login"]);
+  }
 }

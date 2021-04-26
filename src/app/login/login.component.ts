@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   username : string = "";
   password : string = "";
+  errorMsg : string = "";
 
   constructor(private formulaireService : FormulaireService, private router: Router) { }
 
@@ -18,11 +19,10 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin() {
-    console.log(this.username + " " + this.password);
-    this.formulaireService.login(this.username, this.password).subscribe(response => {
-      if(response.status == 200){
+    this.formulaireService.login(this.username, this.password).subscribe((response) => {
         this.router.navigate(['/']);
-      }
+      }, (error) => {
+        this.errorMsg = "Identifiants incorrects."
     });
   }
 }
