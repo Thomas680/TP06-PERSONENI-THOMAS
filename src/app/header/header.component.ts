@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { PanierState } from '../state/panier.state';
+import { PanierState } from '../../shared/states/panier.state';
 import { Produit } from 'src/shared/models/produit';
 import { Router } from '@angular/router';
 

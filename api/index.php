@@ -25,6 +25,16 @@ function addCorsHeaders (Response $response) : Response {
     return $response;
 }
 
+function decodeJWT($jwt) {
+  $token = JWT::decode($jwt, JWT_SECRET, ['HS256']);
+  $now = new DateTimeImmutable();
+
+  if ($token->nbf > $now->getTimestamp() || $token->exp < $now->getTimestamp()) {
+    return null;
+  } else {
+    return $token;
+  }
+}
 
 // Middleware de validation du Jwt
 $options = [
@@ -38,7 +48,7 @@ $options = [
     "ignore" => ["/api/login","/api/register"],
     "error" => function ($response, $arguments) {
         $data = array('ERREUR' => 'Connexion', 'ERREUR' => 'JWT Non valide');
-        $response = $response->withStatus(401);
+        $response = $response = $response->withStatus(401);
         return $response->withHeader("Content-Type", "application/json")->getBody()->write(json_encode($data));
     }
 ];
@@ -58,7 +68,7 @@ $app->post('/api/login', function (Request $request, Response $response, $args) 
 
     if(!$username || !$password) {
       $data = array('ERREUR' => 'Connexion', 'ERREUR' => '400');
-      $response->withStatus(400);
+      $response = $response->withStatus(400);
       $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
       return $response;
     }
@@ -66,7 +76,7 @@ $app->post('/api/login', function (Request $request, Response $response, $args) 
     $user = $userRepository->findOneBy(['username' => $username]);
     if($user == null || sha1($password) != $user->getPassword()) {{
       $data = array('ERREUR' => 'Connexion', 'ERREUR' => '400', 'ERREUR' => 'Identifiants invalide');
-      $response->withStatus(400);
+      $response = $response->withStatus(400);
       $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
       return $response;
     }}
@@ -75,8 +85,7 @@ $app->post('/api/login', function (Request $request, Response $response, $args) 
     $expirationTime = $issuedAt + 3600;
     $payload = array(
         'id' => 1,
-        'email' => "thomas.personeni.auditeur@lecnam.net",
-        'username' => "thomasp",
+        'username' => $user->getUsername(),
         'iat' => $issuedAt,
         'exp' => $expirationTime
     );
@@ -103,14 +112,14 @@ $app->post('/api/register', function (Request $request, Response $response, $arg
 
   if(!$username || !$password) {
     $data = array('ERREUR' => 'Inscription', 'ERREUR' => '400');
-    $response->withStatus(400);
+    $response = $response->withStatus(400);
     $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
     return $response;
   }
 
   if($userRepository->findOneBy(['username' => $username]) != null) {
     $data = array('ERREUR' => 'Inscription', 'ERREUR' => '400', 'ERREUR' => 'Identifiant deja utilise');
-    $response->withStatus(400);
+    $response = $response->withStatus(400);
     $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
     return $response;
   }
@@ -184,49 +193,49 @@ $app->get('/api/produits/{id}', function (Request $request, Response $response, 
   return addCorsHeaders($response);
 });
 
-$app->get('/api/init/produits', function (Request $request, Response $response, $args) {
+$app->post('/api/account', function (Request $request, Response $response, $args) {
   global $entityManager;
 
-  $produitRepository = $entityManager->getRepository('Produit');
-  $produits = $produitRepository->findAll();
+  $userRepository = $entityManager->getRepository('Utilisateur');
+  
+  $bearer = $request->getHeaderLine("Authorization");
+  $bearer = substr($bearer, 7);
+  $token = decodeJWT($bearer);
 
-  $p1 = new Produit();
-  $p1->setTitre("Kinder Cards");
-  $p1->setDescription("Délicieusement délicieux");
-  $p1->setPrix(4.5);
+  $userId = $token->id;
 
-  $p2 = new Produit();
-  $p2->setTitre("Kinder Bueno");
-  $p2->setDescription("Parce que vous le valez bien");
-  $p2->setPrix(3.5);
+  $user = $userRepository->find($userId);
 
-  $p3 = new Produit();
-  $p3->setTitre("Twix");
-  $p3->setDescription("Pour un double plaisir");
-  $p3->setPrix(3);
+  $json = $request->getBody();
+  $data = json_decode($json, true); // parse the JSON into an assoc. array
+  if(!$data) {
+    $data = [];
+  }
 
-  $p4 = new Produit();
-  $p4->setTitre("Mars");
-  $p4->setDescription("Onctueux");
-  $p4->setPrix(2);
+  $username = array_key_exists('username', $data) ? $data['username'] : null;
 
-  $p5 = new Produit();
-  $p5->setTitre("KitKat Balls");
-  $p5->setDescription("Croustillant");
-  $p5->setPrix(4.5);
+  if($user == null || !$username) {
+    $data = array('ERREUR' => 'Modification du profil', 'ERREUR' => '400');
+    $response = $response->withStatus(400);
+    $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
+    return $response;
+  }
 
-  $entityManager->persist($p1);
-  $entityManager->persist($p2);
-  $entityManager->persist($p3);
-  $entityManager->persist($p4);
-  $entityManager->persist($p5);
+  if($userRepository->findBy(['username' => $username]) != null) {
+    $data = array('ERREUR' => "Nom d'utilisateur deja utilise", 'ERREUR' => '400');
+    $response = $response->withStatus(400);
+    $response->withHeader("Content-Type","application/json")->getBody()->write(json_encode($data));
+    return $response;
+  }
+
+  $user->setUsername($username);
+  $entityManager->persist($user);
   $entityManager->flush();
-
-  $response = $response->withHeader("Content-Type", "application/json;charset=utf-8");
-
-  $response->getBody()->write(json_encode(['success' => true]));
+  
+  $response->getBody()->write(json_encode (['success' => true]));
   return $response;
 });
+
 
 $app->get('/api/client/{id}', function (Request $request, Response $response, $args) {
     $id = $args['id'];

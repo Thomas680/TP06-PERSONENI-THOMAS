@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { RetirerProduit } from '../actions/retirer-produit.action';
+import { RetirerProduit } from '../../shared/actions/retirer-produit.action';
 import { Observable } from 'rxjs';
-import { PanierState } from '../state/panier.state';
+import { PanierState } from '../../shared/states/panier.state';
 import { Produit } from 'src/shared/models/produit';
 
 @Component({

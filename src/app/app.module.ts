@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FiltreComponent } from './filtre/filtre.component';
 import { FormsModule } from '@angular/forms';
 import { PanierComponent } from './panier/panier.component';
-import { PanierState } from './state/panier.state';
+import { PanierState } from '../shared/states/panier.state';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { NgxsModule } from '@ngxs/store';

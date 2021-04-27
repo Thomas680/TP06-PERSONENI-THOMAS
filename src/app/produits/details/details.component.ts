@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AjouterProduit } from '../../actions/ajouter-produit.action';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ApiService } from '../../api.service';
 import { Observable } from 'rxjs';
-import { PanierState } from '../../state/panier.state';
 import { Produit } from 'src/shared/models/produit';
+import { AjouterProduit } from 'src/shared/actions/ajouter-produit.action';
 
 @Component({
   selector: 'app-detail',
